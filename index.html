@@ -4,7 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#120e18">
-    <link rel="icon" href="data:,">
+    <!-- installable: iPhone/iPad "Add to Home Screen" opens it full screen, like an app; Android/desktop Chrome can Install it -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Hollowbrook">
+    <link rel="apple-touch-icon" href="TemplateData/icon-180.png">
+    <link rel="icon" type="image/png" href="TemplateData/icon-192.png">
+    <link rel="manifest" href="TemplateData/manifest.webmanifest">
     <title>Hollowbrook</title>
     <style>
       html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #120e18; overflow: hidden; }
@@ -18,10 +25,17 @@
       #fill { height: 100%; width: 0%; background: #f2c94c; transition: width 0.15s; }
       #note { margin-top: 12px; font-size: 14px; color: #a89a84; text-align: center; max-width: 80vw; }
       #error { display: none; margin-top: 16px; color: #ff9a8a; font-size: 15px; max-width: 80vw; text-align: center; white-space: pre-wrap; }
+      /* the game is landscape: on a phone held upright, ask to turn it */
+      #rotate { display: none; position: fixed; inset: 0; z-index: 10; background: #120e18; color: #efe0c4;
+                font: 600 20px/1.5 Georgia, "Times New Roman", serif; text-align: center; flex-direction: column; align-items: center; justify-content: center; }
+      #rotate .phone { width: 46px; height: 78px; border: 4px solid #f2c94c; border-radius: 9px; margin-bottom: 22px; animation: turn 2.2s ease-in-out infinite; }
+      @keyframes turn { 0%, 25% { transform: rotate(0deg); } 55%, 100% { transform: rotate(-90deg); } }
+      @media (orientation: portrait) and (pointer: coarse) { #rotate { display: flex; } }
     </style>
   </head>
   <body>
     <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="rotate"><div class="phone"></div>Turn your phone sideways to play</div>
     <div id="loading">
       <h1>Hollowbrook</h1>
       <div id="bar"><div id="fill"></div></div>
